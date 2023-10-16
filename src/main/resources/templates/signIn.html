@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>signIn</title>
+    <link rel="stylesheet" th:href="@{/styles/bootstrap.min.css}">
+</head>
+<body>
+<section class="vh-100 bg-image"
+         style="background-image: url('/img/5594016.jpg');
+          background-size: cover;
+          background-position: center;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="text-center text-dark mt-5">Please sign in</h2>
+
+                <div class="card my-5">
+
+
+                    <form method="post" th:action="@{/login}" class="card-body cardbody-color p-lg-5">
+                        <div class="mb-3" style="color: red" th:if="${param.error}">
+                            bad credentials!
+                        </div>
+                        <div class="mb-3">
+                            <input name="username" type="email" class="form-control" id="Username"
+                                   aria-describedby="emailHelp"
+                                   placeholder="email">
+                        </div>
+                        <div class="mb-3">
+                            <input name="password" type="password" class="form-control" id="password"
+                                   placeholder="password">
+                        </div>
+                        <div class="text-center">
+                            <button style="background-color: #0e1c36;
+              color: #fff;" type="submit" class="btn btn-color px-5 mb-2 w-100">Login
+                            </button>
+                        </div>
+                        <div class="text-center">
+                            <a style="text-decoration: none;" href="/oauth2/authorization/google">
+                                <button style="background-color: red;
+               color: #fcfcfc;" type="button" class="btn btn-color px-5 mb-3 w-100">
+                                    Sign In with google
+                                </button>
+                            </a>
+                        </div>
+                        <div id="emailHelp" class="form-text text-center mb-5 text-dark">Not
+                            Registered? <a th:href="@{/registration}" class="text-dark fw-bold"> Create an
+                                Account</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!--<form method="post" th:action="@{/login}">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="col-2 mb-3" style="color: red" th:if="${param.error}">-->
+<!--            bad credentials!-->
+<!--        </div>-->
+<!--        <div class="col-2 mb-3">-->
+<!--            <label for="exampleInputEmail1" class="form-label">Email address</label>-->
+<!--            <input name="username" type="email" class="form-control" id="exampleInputEmail1"-->
+<!--                   aria-describedby="emailHelp">-->
+<!--        </div>-->
+<!--        <div class="col-2 mb-3">-->
+<!--            <label for="exampleInputPassword1" class="form-label">Password</label>-->
+<!--            <input name="password" type="password" class="form-control" id="exampleInputPassword1">-->
+<!--        </div>-->
+<!--        <button type="submit" class="btn btn-primary">sign in</button>-->
+<!--    </div>-->
+<!--</form>-->
+</body>
+</html>

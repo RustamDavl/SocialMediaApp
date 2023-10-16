@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>signUp</title>
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" th:href="@{/styles/bootstrap.min.css}" type="text/css">
+
+</head>
+<body>
+<section class="vh-100 bg-image"
+         style="background-image: url('/img/5594016.jpg');
+          background-size: cover;
+          background-position: center;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="text-center text-dark mt-5">Registration</h2>
+
+                <div class="card my-5">
+
+                    <form method="post" th:action="@{/signUp}" class="card-body cardbody-color p-lg-5">
+
+
+                        <div class="mb-3">
+                            <input name="name" type="text" class="form-control" id="name" placeholder="name">
+                        </div>
+
+                        <div class="mb-3">
+                            <input name="username" type="email" class="form-control" id="Username" aria-describedby="emailHelp"
+                                   placeholder="email">
+                        </div>
+                        <div class="mb-3">
+                            <input name="password" type="password" class="form-control" id="password" placeholder="password">
+                        </div>
+                        <div class="text-center"><button style="background-color: #0e1c36;
+              color: #fff;" type="submit" class="btn btn-color px-5 mb-5 w-100">Register</button></div>
+                        <div id="emailHelp" class="form-text text-center mb-2 text-dark">
+                             <a th:href="@{/login}" class="text-dark fw-bold">To login page</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!--<form method="post" th:action="@{/signUp}">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="col-2 mb-3">-->
+<!--            <label for="exampleInputEmail1" class="form-label">Name</label>-->
+<!--            <input name="name" type="text" class="form-control" id="exampleInputName1">-->
+<!--        </div>-->
+<!--        <div class="col-2 mb-3">-->
+<!--            <label for="exampleInputEmail1" class="form-label">Email address</label>-->
+<!--            <input name="username" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">-->
+<!--        </div>-->
+<!--        <div class="col-2 mb-3">-->
+<!--            <label for="exampleInputPassword1" class="form-label">Password</label>-->
+<!--            <input name="password" type="password" class="form-control" id="exampleInputPassword1">-->
+<!--        </div>-->
+<!--        <button type="submit" class="btn btn-primary">sign up</button>-->
+<!--    </div>-->
+<!--</form>-->
+</body>
+</html>

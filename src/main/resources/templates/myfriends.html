@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" th:href="@{/styles/bootstrap.min.css}" type="text/css">
+
+</head>
+<body>
+
+<div class="container col-7">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/users/{id}(id = ${userId})}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page"
+                           th:href="@{/users/{id}/posts(id = ${userId}, offset = ${0})}">My
+                            posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/posts(userId = ${userId})}">Write a
+                            post</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"
+                                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Users
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-dark"
+                                        aria-labelledby="navbarDarkDropdownMenuLink">
+                                        <li><a class="dropdown-item" aria-current="page"
+                                               th:href="@{/users(userId = ${userId}, offset = ${0})}">find friends</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/users/{id}/friends(id = ${userId})}">my friends</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/users/{id}/subscribers(id = ${userId})}">subscribers</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/users/{id}/subscriptions(id = ${userId})}">subscriptions</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <form method="post" th:action="@{/logout}" class="d-flex">
+                <button class="btn btn-outline-success" type="submit">LogOut</button>
+            </form>
+        </div>
+    </nav>
+</div>
+
+<div class="container col-6">
+    <div th:each="friend : ${friends}" class="card mt-3">
+        <div class="card-body">
+            <label th:text="|${friend.name}, ${friend.email},|"/>
+            <a th:href="@{/user/{id}/posts(id = ${friend.id}, offset = ${0}, viewerId = ${friend.id})}" class="me-3">
+                see posts
+            </a>
+
+            <form   method="post" class="mt-2" th:action="@{/deletefriend}">
+
+                <input type="hidden" name="senderId" th:value="${friend.id}">
+                <input type="hidden" name="recipientId" th:value="${userId}">
+                <button  type="submit" class="btn btn-sm btn-primary">delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/js/bootstrap.bundle.min.js}">
+
+</script>
+</body>
+</html>

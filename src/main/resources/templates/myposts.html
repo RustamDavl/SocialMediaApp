@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>myposts</title>
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" th:href="@{/styles/bootstrap.min.css}" type="text/css">
+
+</head>
+<body>
+
+
+<div class="container col-7">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a th:if="${viewerId == null}" class="nav-link active" aria-current="page"
+                           th:href="@{/users/{id}(id = ${userId})}">Home</a>
+                        <a th:if="${viewerId != null}" class="nav-link active" aria-current="page"
+                           th:href="@{/users/{id}(id = ${viewerId})}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:if="${viewerId == null}" class="nav-link active" aria-current="page"
+                           th:href="@{/users/{id}/posts(id = ${userId}, offset = ${0})}">My posts </a>
+                        <a th:if="${viewerId != null}" class="nav-link active" aria-current="page"
+                           th:href="@{/users/{id}/posts(id = ${viewerId}, offset = ${0})}">My
+                            posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:if="${viewerId == null}" class="nav-link active" aria-current="page"
+                           th:href="@{/posts(userId = ${userId})}">Write a post</a>
+
+                        <a th:if="${viewerId != null}" class="nav-link active" aria-current="page" th:href="@{/post(userId = ${viewerId})}">Write a
+                            post</a>
+                    </li>
+                    <li class="nav-item">
+
+
+                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"
+                                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Users
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-dark"
+                                        aria-labelledby="navbarDarkDropdownMenuLink">
+                                        <li>
+                                            <a th:if="${viewerId != null}" class="dropdown-item" aria-current="page"
+                                               th:href="@{/users(userId = ${viewerId}, offset = ${0})}">find friends</a>
+
+                                            <a th:if="${viewerId == null}" class="dropdown-item" aria-current="page"
+                                               th:href="@{/users(userId = ${userId}, offset = ${0})}">find friends</a>
+                                        </li>
+
+                                        <li>
+                                            <a th:if="${viewerId != null}" class="dropdown-item" th:href="@{/users/{id}/friends(id = ${viewerId})}">my friends</a>
+                                            <a th:if="${viewerId == null}" class="dropdown-item" th:href="@{/users/{id}/friends(id = ${userId})}">my friends</a>
+                                        </li>
+                                        <li>
+                                            <a th:if="${viewerId != null}" class="dropdown-item" th:href="@{/users/{id}/subscribers(id = ${viewerId})}">subscribers</a>
+                                            <a th:if="${viewerId == null}" class="dropdown-item" th:href="@{/users/{id}/subscribers(id = ${userId})}">subscribers</a>
+                                        </li>
+                                        <li>
+                                            <a th:if="${viewerId != null}" class="dropdown-item" th:href="@{/users/{id}/subscriptions(id = ${viewerId})}">subscriptions</a>
+                                            <a th:if="${viewerId == null}" class="dropdown-item" th:href="@{/users/{id}/subscriptions(id = ${userId})}">subscriptions</a>
+
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <form method="post" th:action="@{/logout}" class="d-flex">
+                <button class="btn btn-outline-success" type="submit">LogOut</button>
+            </form>
+        </div>
+    </nav>
+</div>
+
+
+<div class="container p-3 d-flex justify-content-center">
+
+    <div class="card-header">
+        <h5 class="card-title">All posts</h5>
+    </div>
+
+</div>
+
+<div th:each="post : ${myposts}" class="container col-4 p-3">
+
+    <div class="card text-center">
+        <div th:text="${post.title}" class="card-header">
+            Title
+        </div>
+        <div class="card-body">
+
+            <p th:text="${post.body}" class="card-text">body</p>
+
+        </div>
+
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" th:each="id : ${post.ids}">
+                    <img th:src="@{/api/v1/image/{imageId}(imageId = ${id})}" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="card-footer text-muted">
+            <label th:text="|created at ${post.readDateDto.day} ${post.readDateDto.month} ${post.readDateDto.year}|">
+                dummy
+            </label>
+            <div class="d-flex justify-content-between">
+                <form method="get" th:action="@{/post/{id}(id = ${post.id})}">
+                    <button type="submit" class="btn btn-primary">update</button>
+                </form>
+
+                <form method="post" th:action="@{/post/delete}">
+                    <input name="id" hidden="hidden" th:value="${post.id}">
+                    <button type="submit" class="btn btn-primary">delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="container col-2 p-2">
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item ">
+                <a th:if="${pagination.page > 0}" class="page-link"
+                   th:href="@{/user/{id}/posts(id = ${userId}, offset = ${pagination.page - 1})}">Previous</a>
+            </li>
+            <li class="page-item active"><a
+                    th:text="${pagination.totalPages == 0} ? ${pagination.page} : ${pagination.page + 1}"
+                    class="page-link"
+
+                    href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">...</a></li>
+            <li class="page-item"><a th:text="${pagination.totalPages}" class="page-link"
+                                     th:href="@{/users/{id}/posts(id = ${userId}, offset = ${pagination.totalPages - 1 < 0 ? 0 : pagination.totalPages - 1} )}">20</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${pagination.page < pagination.totalPages - 1}"
+                   th:href="@{/user/{id}/posts(id = ${userId}, offset = ${pagination.page + 1})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}">
+</script>
+
+</body>
+</html>

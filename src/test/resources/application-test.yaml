@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: test
+    password: test
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+  mvc:
+    format:
+      date: iso
+      time: iso
